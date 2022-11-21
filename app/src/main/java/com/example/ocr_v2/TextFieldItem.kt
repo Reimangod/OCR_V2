@@ -16,10 +16,10 @@ import androidx.compose.ui.Alignment
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldItem(
-    name: String,
-    perDay: Int,
-    perTime: Int,
-    total: Int,
+    name: String?,
+    perDay: Int?,
+    perTime: Int?,
+    total: Int?,
     modifier:Modifier = Modifier) {
     var perDayText by remember { mutableStateOf(TextFieldValue("$perDay")) }
     var perTimeText by remember { mutableStateOf(TextFieldValue("$perTime")) }
@@ -28,7 +28,9 @@ fun TextFieldItem(
         .padding(8.dp)
         .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = name, modifier = Modifier.padding(8.dp))
+        if (name != null) {
+            Text(text = name, modifier = Modifier.padding(8.dp))
+        }
         TextField(
             value = perDayText,
             onValueChange = {

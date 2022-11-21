@@ -1,6 +1,8 @@
 package com.example.ocr_v2
 
 import android.content.res.TypedArray
+import android.service.controls.ControlsProviderService.TAG
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
@@ -16,17 +18,35 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 @Composable
 fun TextFieldList(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
+    val db = Firebase.firestore
     val pillList = mutableListOf<RegexData>(
-        RegexData("Panadol", 1, 2, 7),
-        RegexData("Decolgen", 1, 2, 7),
-        RegexData("Khang", 1, 2, 7))
-
+//        RegexData("Panadol", 1, 2, 7),
+//        RegexData("Decolgen", 1, 2, 7),
+//        RegexData("Khang", 1, 2, 7)
+    )
+    db.collection("pills")
+        .get()
+        .addOnSuccessListener { result ->
+            for (document in result) {
+                if (document.getString("Name") != "None") {
+                    pillList.add(RegexData(document.getString("Name"),
+                        (document.getString("perDay"))?.toInt(),
+                        (document.getString("perTime"))?.toInt(),
+                        (document.getString("totalDay"))?.toInt()))
+                }
+            }
+        }
+        .addOnFailureListener { exception ->
+            Log.d(TAG, "Error getting documents: ", exception)
+        }
     Column(horizontalAlignment = Alignment.CenterHorizontally,
     modifier = Modifier.fillMaxWidth()) {
         Button(

@@ -3,6 +3,7 @@ package com.example.ocr_v2
 import android.content.res.TypedArray
 import android.media.Image
 import android.net.Uri
+import android.service.controls.ControlsProviderService.TAG
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -22,6 +23,8 @@ import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
@@ -29,6 +32,7 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 
 @Composable
 fun MainScreen(context: ComponentActivity, navController: NavController) {
+    val db = Firebase.firestore
     val imageUri = remember { mutableStateOf<Uri?>(null) }
     val pattern =
         Regex("(U.ng m.i ng.y|Ng.y u.ng|U.ng ng.y) ([1-9]) l.n, l.n ([1-9]) (vi.n|.ng) (\\W|\\S |)([1-9]) ng.y")
@@ -97,6 +101,19 @@ fun MainScreen(context: ComponentActivity, navController: NavController) {
                                             && regexItem.perTime != 0
                                             && regexItem.totalDay != 0) {
                                             pillList += regexItem
+                                            db.collection("pills")
+                                                .add(hashMapOf(
+                                                    "Name" to regexItem.name,
+                                                    "perDay" to regexItem.perDay,
+                                                    "perTime" to regexItem.perTime,
+                                                    "totalDay" to regexItem.totalDay
+                                                ))
+                                                .addOnSuccessListener { documentReference ->
+                                                    Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                                                }
+                                                .addOnFailureListener { e ->
+                                                    Log.w(TAG, "Error adding document", e)
+                                                }
                                             regexItem = RegexData("initial", 0, 0, 0)
                                         }
                                     }
