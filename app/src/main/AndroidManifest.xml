@@ -14,6 +14,41 @@
         android:theme="@style/Theme.Ocr_v2"
         tools:targetApi="31">
         <activity
+            android:name=".HomeScreen"
+            android:exported="false"
+            android:label="@string/title_activity_home_screen"
+            android:theme="@style/Theme.Ocr_v2" />
+        <activity
+            android:name=".MainScreen"
+            android:exported="false"
+            android:label="@string/title_activity_main_screen"
+            android:theme="@style/Theme.Ocr_v2" />
+        <activity
+            android:name=".TextFieldList"
+            android:exported="false"
+            android:label="@string/title_activity_text_field_list"
+            android:theme="@style/Theme.Ocr_v2" />
+        <activity
+            android:name=".TextFieldItem"
+            android:exported="false"
+            android:label="@string/title_activity_text_field_item"
+            android:theme="@style/Theme.Ocr_v2" />
+        <activity
+            android:name=".TextField"
+            android:exported="false"
+            android:label="@string/title_activity_text_field"
+            android:theme="@style/Theme.Ocr_v2" />
+        <activity
+            android:name=".LineList"
+            android:exported="false"
+            android:label="@string/title_activity_line_list"
+            android:theme="@style/Theme.Ocr_v2" />
+        <activity
+            android:name=".LineItem"
+            android:exported="false"
+            android:label="@string/title_activity_line_item"
+            android:theme="@style/Theme.Ocr_v2" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"

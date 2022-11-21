@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">ocr_v2</string>
+    <string name="title_activity_line_item">LineItem</string>
+    <string name="title_activity_line_list">LineList</string>
+    <string name="title_activity_text_field">TextField</string>
+    <string name="title_activity_text_field_item">TextFieldItem</string>
+    <string name="title_activity_text_field_list">TextFieldList</string>
+    <string name="title_activity_main_screen">MainScreen</string>
+    <string name="title_activity_home_screen">HomeScreen</string>
 </resources>
